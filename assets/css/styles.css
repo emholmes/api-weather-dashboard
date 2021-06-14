@@ -1,0 +1,11 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --grey: #D3E0EA;
+    --blue: #226597;
+    --dark-blue: #113F67;
+}
