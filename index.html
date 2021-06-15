@@ -15,8 +15,8 @@
             <!-- search for city here -->
             <form>
                 <label for="search">Search for a City:</label>
-                <input type="search" id="search" name="search" required>
-                <input class="submit-search" type="submit" value="Search">
+                <input type="search" id="search" name="search" placeholder="San Diego" required>
+                <button id="submit-search" type="submit">Search</button>
             </form>
             <div class="search-history" id="search-history"></div>
         </nav>
@@ -33,7 +33,7 @@
         <p id="city-humidity"></p>
         <p id="city-uvi"></p>
     </section>
-    <section class="forecast">
+    <section class="forecast" id="forecast">
         <h3>5-Day Forecast</h3>
         <ul class="forecast-cards">
         </ul>

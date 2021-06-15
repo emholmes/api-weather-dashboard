@@ -1,32 +1,43 @@
 let searchHistory = [];
 
-let cityName = "Austin";
+let captureSearchValue = function(event) {
+    event.preventDefault();
+    let city = document.getElementById("search").value.trim();
+    console.log(city);
+    lookUpCity(city);
+}
 
-const weatherApi = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=8a3c0b5830459bf0bc6ee52ea4c39851";
-
-fetch(weatherApi).then(function(weatherResponse) {
-    if (weatherResponse.ok) {
-        weatherResponse.json().then(function(data) {
-            console.log(data);
-            let cityName = document.getElementById("city-name");
-            let latitude = data.coord.lat;
-            let longitude = data.coord.lon;
-            let date = new Date();
-            cityName.innerText = data.name + " (" + date.toLocaleDateString("en-US")+ ")";
-            return fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + latitude + "&lon=" + longitude + "&units=imperial&appid=8a3c0b5830459bf0bc6ee52ea4c39851")
-        })
-        .then(function(response) {
-            if (response.ok) {
-                response.json().then(function(data) {
-                    console.log(data);
-                    buildCityDetails(data);
-                    buildForecastCards(data);
-                })
-            }
-        })
-    }
+let lookUpCity = function(city) {
     
-})
+    const weatherApi = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=8a3c0b5830459bf0bc6ee52ea4c39851";
+
+    fetch(weatherApi).then(function(weatherResponse) {
+        if (weatherResponse.ok) {
+            weatherResponse.json().then(function(data) {
+                console.log(data);
+                let cityName = document.getElementById("city-name");
+                let latitude = data.coord.lat;
+                let longitude = data.coord.lon;
+                let date = new Date();
+                cityName.innerText = data.name + " (" + date.toLocaleDateString("en-US")+ ")";
+                return fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + latitude + "&lon=" + longitude + "&units=imperial&appid=8a3c0b5830459bf0bc6ee52ea4c39851")
+            })
+            .then(function(response) {
+                if (response.ok) {
+                    response.json().then(function(data) {
+                        console.log(data);
+                        buildCityDetails(data);
+                        buildForecastCards(data);
+                    })
+                }
+            })
+        } else {
+            alert("We couldn't find that city, please try again.");
+        }
+        
+    })
+}
+
 // have hero/current day weather info display from data[0] 
 
 let buildCityDetails = function(data) {
@@ -59,6 +70,16 @@ let addUviBackground = function(uvi) {
 }
 
 let buildForecastCards = function(data) {
+    let liElements = document.querySelector(".forecast-cards").children;
+    let liArray = [];
+    for (let li of liElements) {
+        liArray.push(li);
+    }   
+    console.log(liArray);
+    liArray.forEach(function(el) {
+        el.remove();
+    })
+
     for (let i = 1; i < 6; i++) {
         let date = new Date(data.daily[i].dt * 1000);
         date = date.toLocaleDateString();
@@ -72,3 +93,5 @@ let buildForecastCards = function(data) {
 
     }
 }
+
+document.getElementById("submit-search").addEventListener("click", captureSearchValue);
