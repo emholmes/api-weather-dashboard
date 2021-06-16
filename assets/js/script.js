@@ -26,12 +26,13 @@ let lookUpCity = function(city) {
                 if (response.ok) {
                     response.json().then(function(data) {
                         console.log(data);
-                        buildCityDetails(data);
+                        currentWeather(data);
                         buildForecastCards(data);
                     })
                 }
             })
         } else {
+            // turn in to a modal
             alert("We couldn't find that city, please try again.");
         }
         
@@ -40,32 +41,33 @@ let lookUpCity = function(city) {
 
 // have hero/current day weather info display from data[0] 
 
-let buildCityDetails = function(data) {
+let currentWeather = function(data) {
+    document.querySelector(".current-weather").style.display = "block";
     document.querySelector("#weather-icon").src = "http://openweathermap.org/img/wn/" + data.current.weather[0].icon + ".png";
     document.getElementById("city-temp").innerHTML = "Temp: " + data.current.temp + " &#176;F";
     document.getElementById("city-wind").innerHTML = "Wind: " + data.current.wind_speed + " MPH";
     document.getElementById("city-humidity").innerHTML = "Humidity: " + data.current.humidity + "%";
     let uvi = data.current.uvi;
-    document.getElementById("city-uvi").innerHTML = "UV Index: " + uvi;
+    document.getElementById("city-uvi").innerHTML = "UV Index: <span id='uvi'>" + uvi + "</span>";
     addUviBackground(uvi);
 }
 
 let addUviBackground = function(uvi) {
-    let cityUvi = document.getElementById("city-uvi");
+    let uviSpan = document.getElementById("uvi");
     if (uvi < 3) {
-        cityUvi.classList.add("low");
+        uviSpan.classList.add("low");
     } 
     else if (uvi < 6) {
-        cityUvi.classList.add("moderate");
+        uviSpan.classList.add("moderate");
     }
     else if (uvi < 8) {
-        cityUvi.classList.add("high");
+        uviSpan.classList.add("high");
     }
     else if (uvi < 11) {
-        cityUvi.classList.add("very-high");
+        uviSpan.classList.add("very-high");
     }
     else {
-        cityUvi.classList.add("extreme");
+        uviSpan.classList.add("extreme");
     }
 }
 
@@ -79,7 +81,8 @@ let buildForecastCards = function(data) {
     liArray.forEach(function(el) {
         el.remove();
     })
-
+    let innerH3 = document.querySelector("h3");
+    innerH3.innerHTML = "5-Day Forecast:";
     for (let i = 1; i < 6; i++) {
         let date = new Date(data.daily[i].dt * 1000);
         date = date.toLocaleDateString();
@@ -89,7 +92,7 @@ let buildForecastCards = function(data) {
         let forecastTemp = "<p>Temp: " + data.daily[i].temp.day + " &#176;F</p>";
         let forecastWind = "<p>Wind: " + data.daily[i].wind_speed + " MPH</p>";
         let forecastHumidity = "<p>Humidity: " + data.daily[i].humidity + "%</p>";
-        listEl.innerHTML = date + forecastIcon + forecastTemp + forecastWind + forecastHumidity;
+        listEl.innerHTML = date + "<br>" + forecastIcon + forecastTemp + forecastWind + forecastHumidity;
 
     }
 }

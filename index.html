@@ -4,40 +4,44 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/css/styles.css">
     <title>Weather Dashboard</title>
 </head>
 <body>
     <header>
         <h1>Weather Dashboard</h1>
     </header>
-    <section>
-        <nav>
-            <!-- search for city here -->
-            <form>
-                <label for="search">Search for a City:</label>
-                <input type="search" id="search" name="search" placeholder="San Diego" required>
-                <button id="submit-search" type="submit">Search</button>
-            </form>
-            <div class="search-history" id="search-history"></div>
-        </nav>
-    </section>
-    <section>
-        <!-- search results details display here -->
-
-    </section>
-    <section class="city-details">
-        <!-- 5 day forecast here -->
-        <h2 id="city-name"></h2><img id="weather-icon" src="" >
-        <p id="city-temp"></p>
-        <p id="city-wind"></p>
-        <p id="city-humidity"></p>
-        <p id="city-uvi"></p>
-    </section>
-    <section class="forecast" id="forecast">
-        <h3>5-Day Forecast</h3>
-        <ul class="forecast-cards">
-        </ul>
-    </section>
+    <main>
+        <section class="navigation-section">
+            <nav>
+                <!-- search for city here -->
+                <form class="search-form">
+                    <label for="search">
+                        <h2>Search for a City:</h2>
+                    </label>
+                    <input type="search" id="search" name="search" placeholder="San Diego" required>
+                    <button id="submit-search" type="submit">Search</button>
+                </form>
+                <div class="search-history" id="search-history"></div>
+            </nav>
+        </section>
+        <section class="current-weather">
+            <div>
+                <h2 id="city-name"></h2>
+                <img id="weather-icon" src="" >
+            </div>
+            <p id="city-temp"></p>
+            <p id="city-wind"></p>
+            <p id="city-humidity"></p>
+            <p id="city-uvi"></p>
+        </section>
+        <section class="forecast" id="forecast">
+            <h3></h3>
+            <ul class="forecast-cards">
+            </ul>
+        </section>
+       
+    </main>
     <script src="./assets/js/script.js"></script>
 </body>
 </html>
