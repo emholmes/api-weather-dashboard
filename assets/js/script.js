@@ -1,11 +1,31 @@
 let searchHistory = [];
+let cities = [];
 
 let captureSearchValue = function(event) {
     event.preventDefault();
+    
     let city = document.getElementById("search").value.trim();
     console.log(city);
+    //createCityButton();
+    document.getElementById("search").value = "";
+    // check if previous city already exists in array
+    let found = false;
+    for (let i = 0; i < cities.length; i++) {
+        if (cities[i] === city) {
+            found = true;
+        }
+    }
+    if (!found) {
+        cities.push(city);
+    }
+   
     lookUpCity(city);
+    
+    saveCities();
 }
+
+
+
 
 let lookUpCity = function(city) {
     
@@ -71,6 +91,10 @@ let addUviBackground = function(uvi) {
     }
 }
 
+let emptyUlElement = function() {
+    document.querySelector("ul.forecast-cards").innerHTML = "";
+}
+
 let buildForecastCards = function(data) {
     let liElements = document.querySelector(".forecast-cards").children;
     let liArray = [];
@@ -78,9 +102,7 @@ let buildForecastCards = function(data) {
         liArray.push(li);
     }   
     console.log(liArray);
-    liArray.forEach(function(el) {
-        el.remove();
-    })
+    emptyUlElement();
     let innerH3 = document.querySelector("h3");
     innerH3.innerHTML = "5-Day Forecast:";
     for (let i = 1; i < 6; i++) {
@@ -96,5 +118,22 @@ let buildForecastCards = function(data) {
 
     }
 }
+
+let saveCities = function() {
+    localStorage.setItem("cities", JSON.stringify(cities));
+}
+
+let loadCities = function() {
+    let savedCities = JSON.parse(localStorage.getItem("cities"));
+    if (!savedCities) {
+        return;
+    }
+    for (let city of savedCities) {
+        cities.push(city);
+    }
+}
+
+loadCities();
+console.log(cities);
 
 document.getElementById("submit-search").addEventListener("click", captureSearchValue);
