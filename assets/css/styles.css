@@ -27,10 +27,11 @@ main {
 
 .navigation-section {
     grid-column: 1 / span 6;
+    grid-row: span 2;
 }
 
 .search-form {
-    padding: 10px 20px 10px 10px;
+    margin: 10px 20px 15px 10px;
 }
 
 input {
@@ -53,6 +54,23 @@ input {
     border-radius: 5px;
     border: none;
     font-size: 16px;
+}
+
+.search-history {
+    margin: 0 20px 10px 10px;
+    border-top: 1px solid var(--dark-blue);
+}
+
+.city-button {
+    width: 100%;
+    padding: 10px 0;
+    background-color: var(--grey);
+    color: #000;
+    font-weight: 500;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    margin-top: 15px;
 }
 
 .current-weather {
@@ -192,8 +210,13 @@ li:nth-child(5) {
         margin: 20px auto 40px;
     }
 
-    .search-form {
-        padding: 10px 0 10px 0;
+    .search-form, 
+    .search-history {
+        margin: 10px 0 10px 0;
+    }
+
+    .current-weather {
+        margin: 10px 0 0;
     }
 
     .forecast-cards {

@@ -6,25 +6,30 @@ let captureSearchValue = function(event) {
     
     let city = document.getElementById("search").value.trim();
     console.log(city);
-    //createCityButton();
     document.getElementById("search").value = "";
-    // check if previous city already exists in array
-    let found = false;
-    for (let i = 0; i < cities.length; i++) {
-        if (cities[i] === city) {
-            found = true;
-        }
-    }
-    if (!found) {
-        cities.push(city);
-    }
    
     lookUpCity(city);
-    
-    saveCities();
 }
 
 
+let doesCityAlreadyExist = function(cityName) {
+    let found = false;
+    for (let i = 0; i < cities.length; i++) {
+        if (cities[i] === cityName) {
+            found = true;
+        }
+    }
+    return found;
+}
+
+
+let createCityButton = function(cityName) {
+    let cityButton = document.createElement("button");
+    cityButton.classList.add("city-button");
+    cityButton.innerHTML = cityName;
+    document.querySelector("#search-history").appendChild(cityButton);
+
+}
 
 
 let lookUpCity = function(city) {
@@ -46,8 +51,14 @@ let lookUpCity = function(city) {
                 if (response.ok) {
                     response.json().then(function(data) {
                         console.log(data);
+                        
                         currentWeather(data);
                         buildForecastCards(data);
+                        if (doesCityAlreadyExist(city) === false) {
+                            cities.push(city);
+                            createCityButton(city);
+                        }
+                        saveCities();
                     })
                 }
             })
@@ -130,6 +141,7 @@ let loadCities = function() {
     }
     for (let city of savedCities) {
         cities.push(city);
+        createCityButton(city);
     }
 }
 
