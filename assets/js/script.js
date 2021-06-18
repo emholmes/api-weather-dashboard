@@ -89,10 +89,10 @@ let buildForecastCards = function(data) {
         let listEl = document.createElement("li");
         document.querySelector(".forecast-cards").appendChild(listEl);
         let forecastIcon = "<img src='http://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + ".png'>";
-        let forecastTemp = "<p>Temp: " + data.daily[i].temp.day + " &#176;F</p>";
-        let forecastWind = "<p>Wind: " + data.daily[i].wind_speed + " MPH</p>";
-        let forecastHumidity = "<p>Humidity: " + data.daily[i].humidity + "%</p>";
-        listEl.innerHTML = date + "<br>" + forecastIcon + forecastTemp + forecastWind + forecastHumidity;
+        let forecastTemp = "<p><span>Temp:</span> " + data.daily[i].temp.day + " &#176;F</p>";
+        let forecastWind = "<p><span>Wind:</span> " + data.daily[i].wind_speed + " MPH</p>";
+        let forecastHumidity = "<p><span>Humidity:</span> " + data.daily[i].humidity + "%</p>";
+        listEl.innerHTML = "<p>" + date + "</p>" +  forecastIcon + forecastTemp + forecastWind + forecastHumidity;
 
     }
 }

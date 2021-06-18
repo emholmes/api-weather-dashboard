@@ -21,10 +21,12 @@ h1 {
 main {
     display: grid;
     grid-template-columns: repeat(25, 1fr);
+    max-width: 1300px;
+    margin: 10px auto 20px;
 }
 
 .navigation-section {
-    grid-column: 1 / span 5;
+    grid-column: 1 / span 6;
 }
 
 .search-form {
@@ -55,11 +57,11 @@ input {
 
 .current-weather {
     display: none;
-    grid-column:  6 / span 20;
+    grid-column:  7 / span 19;
     grid-row: 1;
     border: 1px solid var(--dark-blue);
     padding-left: 8px;
-    margin: 10px 0;
+    margin: 10px 20px 0 0;
 }
 
 .current-weather div {
@@ -73,7 +75,7 @@ input {
 }
 
 #uvi {
-    padding: 5px 15px;
+    padding: 5px 12px;
     border-radius: 3px;
     font-size: 14px;
     color: #FFF;
@@ -81,19 +83,39 @@ input {
 }
 
 .forecast {
-    display: contents;
+    /* display: contents; */
+    grid-column: 7 / span 19;
 }
 
 .forecast-cards {
-    display: contents;
+    /* display: contents; */
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 195px);
     list-style-type: none;
 }
 
 h3 {
     grid-column: 6 / span 4;
+    padding-top: 20px;
 }
 
-li:nth-child(1) {
+li {
+    background-color: var(--dark-blue);
+    color: #FFF;
+    margin: 10px 25px 0 0;
+    padding: 8px;
+}
+
+li p span {
+    font-weight: 200;
+}
+
+li p:not(:first-of-type) {
+    padding-bottom: 15px;
+    font-size: 15px;
+}
+
+/* li:nth-child(1) {
     grid-column: 6 / span 4;
 }
 
@@ -111,7 +133,7 @@ li:nth-child(4) {
 
 li:nth-child(5) {
     grid-column: 22 / span 4;
-}
+} */
 
 .low {
     background-color: #4fa20f;
@@ -131,4 +153,60 @@ li:nth-child(5) {
 
 .extreme {
     background-color: #9e47cc;
+}
+
+
+@media screen and (max-width: 1024px) {
+    .navigation-section {
+        grid-column: 1 / span 8;
+    }
+
+    .current-weather,
+    .forecast {
+        grid-column: 9 / span 17;
+    }
+    
+    .forecast-cards {
+        grid-template-columns: repeat(auto-fill, 190px);
+    }
+
+    
+}
+
+@media screen and (max-width: 768px) {
+    .navigation-section {
+        grid-column: 1 / span 10;
+    }
+    
+    .current-weather, 
+    .forecast {
+        grid-column: 11 / span 15;
+    }
+} 
+
+
+@media screen and (max-width: 574px) {
+    main {
+        display: block;
+        width: 85%;
+        margin: 20px auto 40px;
+    }
+
+    .search-form {
+        padding: 10px 0 10px 0;
+    }
+
+    .forecast-cards {
+        grid-template-columns: repeat(auto-fill, 160px);
+    }
+
+    li {
+        margin: 10px 15px 0 0;
+    }
+}
+
+@media screen and (max-width: 365px) {
+    .forecast-cards {
+        grid-template-columns: repeat(auto-fill, 200px);
+    }
 }
