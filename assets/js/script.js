@@ -5,12 +5,10 @@ let captureSearchValue = function(event) {
     event.preventDefault();
     
     let city = document.getElementById("search").value.trim();
-    console.log(city);
     document.getElementById("search").value = "";
    
     lookUpCity(city);
 }
-
 
 let doesCityAlreadyExist = function(cityName) {
     let found = false;
@@ -22,13 +20,19 @@ let doesCityAlreadyExist = function(cityName) {
     return found;
 }
 
-
 let createCityButton = function(cityName) {
+    let buttonLi = document.createElement("li");
     let cityButton = document.createElement("button");
     cityButton.classList.add("city-button");
+    cityButton.setAttribute("type", "button");
     cityButton.innerHTML = cityName;
-    document.querySelector("#search-history").appendChild(cityButton);
+    buttonLi.appendChild(cityButton);
+    document.querySelector("ul").appendChild(buttonLi);
+}
 
+// city button click event 
+document.getElementById("search-history").onclick = function(event) {
+    lookUpCity(event.target.innerHTML);
 }
 
 
@@ -50,8 +54,6 @@ let lookUpCity = function(city) {
             .then(function(response) {
                 if (response.ok) {
                     response.json().then(function(data) {
-                        console.log(data);
-                        
                         currentWeather(data);
                         buildForecastCards(data);
                         if (doesCityAlreadyExist(city) === false) {
@@ -144,8 +146,7 @@ let loadCities = function() {
         createCityButton(city);
     }
 }
-
 loadCities();
-console.log(cities);
 
 document.getElementById("submit-search").addEventListener("click", captureSearchValue);
+

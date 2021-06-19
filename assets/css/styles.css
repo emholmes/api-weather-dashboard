@@ -117,7 +117,11 @@ h3 {
     padding-top: 20px;
 }
 
-li {
+ul {
+    list-style-type: none;
+}
+
+.forecast-cards li {
     background-color: var(--dark-blue);
     color: #FFF;
     margin: 10px 25px 0 0;
