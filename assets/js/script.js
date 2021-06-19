@@ -27,7 +27,7 @@ let createCityButton = function(cityName) {
     cityButton.setAttribute("type", "button");
     cityButton.innerHTML = cityName;
     buttonLi.appendChild(cityButton);
-    document.querySelector("ul").appendChild(buttonLi);
+    document.querySelector("ul").prepend(buttonLi);
 }
 
 // city button click event 
