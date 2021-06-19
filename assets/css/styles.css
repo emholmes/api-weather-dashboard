@@ -22,7 +22,7 @@ main {
     display: grid;
     grid-template-columns: repeat(25, 1fr);
     max-width: 1300px;
-    margin: 10px auto 20px;
+    margin-right: 20px;
 }
 
 .navigation-section {
@@ -43,6 +43,8 @@ input {
     font-size: 16px;
     padding: 8px 5px;
     margin: 10px 0 13px;
+    border-radius: 5px;
+    border-width: 1px;
 }
 
 #submit-search {
@@ -78,8 +80,8 @@ input {
     grid-column:  7 / span 19;
     grid-row: 1;
     border: 1px solid var(--dark-blue);
-    padding-left: 8px;
-    margin: 10px 20px 0 0;
+    padding: 0 0 5px 8px;
+    margin: 10px 0 0 0;
 }
 
 .current-weather div {
@@ -101,14 +103,13 @@ input {
 }
 
 .forecast {
-    /* display: contents; */
     grid-column: 7 / span 19;
 }
 
 .forecast-cards {
-    /* display: contents; */
     display: grid;
-    grid-template-columns: repeat(auto-fill, 195px);
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    grid-gap: 20px;
     list-style-type: none;
 }
 
@@ -124,7 +125,7 @@ ul {
 .forecast-cards li {
     background-color: var(--dark-blue);
     color: #FFF;
-    margin: 10px 25px 0 0;
+    margin: 10px 0 0 0;
     padding: 8px;
 }
 
@@ -136,26 +137,6 @@ li p:not(:first-of-type) {
     padding-bottom: 15px;
     font-size: 15px;
 }
-
-/* li:nth-child(1) {
-    grid-column: 6 / span 4;
-}
-
-li:nth-child(2) {
-    grid-column: 10 / span 4;
-}
-
-li:nth-child(3) {
-    grid-column: 14 / span 4;
-}
-
-li:nth-child(4) {
-    grid-column: 18 / span 4;
-}
-
-li:nth-child(5) {
-    grid-column: 22 / span 4;
-} */
 
 .low {
     background-color: #4fa20f;
