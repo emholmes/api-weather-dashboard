@@ -26,14 +26,14 @@ let createCityButton = function(cityName) {
     cityButton.classList.add("city-button");
     cityButton.setAttribute("type", "button");
     cityButton.innerHTML = cityName;
+    cityButton.addEventListener("click", cityButtonClicked);
     buttonLi.appendChild(cityButton);
     document.querySelector("ul").prepend(buttonLi);
 }
 
-// city button click event 
-$(".search-history").on("click", ".city-button", function() {
-    getCityCoordinates($(this).text());
-})
+let cityButtonClicked = function(event) {
+    getCityCoordinates(event.target.innerHTML);
+}
 
 let getCityCoordinates = function(city) {
     const geocodingApi = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=8a3c0b5830459bf0bc6ee52ea4c39851";
