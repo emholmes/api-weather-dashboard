@@ -31,9 +31,9 @@ let createCityButton = function(cityName) {
 }
 
 // city button click event 
-document.getElementById("search-history").onclick = function(event) {
-    getCityCoordinates(event.target.innerHTML);
-}
+$(".search-history").on("click", ".city-button", function() {
+    getCityCoordinates($(this).text());
+})
 
 let getCityCoordinates = function(city) {
     const geocodingApi = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=8a3c0b5830459bf0bc6ee52ea4c39851";
@@ -45,7 +45,8 @@ let getCityCoordinates = function(city) {
                 let cityCoordinates = "lat=" + data[0].lat + "&lon=" + data[0].lon;
                 let cityName = document.getElementById("city-name");
                 let date = new Date();
-                cityName.innerText = data[0].name + " (" + date.toLocaleDateString("en-US")+ ")";
+                console.log(data);
+                cityName.innerText = data[0].local_names.en + " (" + date.toLocaleDateString("en-US")+ ")";
                 if (inSearchHistory(city) === false) {
                     cities.push(city);
                     createCityButton(city);
@@ -67,7 +68,6 @@ let getWeatherInfo = function(coordinates) {
     fetch(weatherApi).then(function(response) {
         if (response.ok) {
             response.json().then(function(data) {
-                console.log(data);
                 currentWeather(data);
                 buildForecastCards(data);
                 
@@ -119,7 +119,6 @@ let buildForecastCards = function(data) {
     for (let li of liElements) {
         liArray.push(li);
     }   
-    console.log(liArray);
     emptyUlElement();
     let innerH3 = document.querySelector("h3");
     innerH3.innerHTML = "5-Day Forecast:";
