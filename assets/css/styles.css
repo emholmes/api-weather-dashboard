@@ -27,7 +27,7 @@ main {
 
 nav {
     grid-column: 1 / span 6;
-    grid-row: span 10;
+    grid-row: span 4;
 }
 
 .search-form {
