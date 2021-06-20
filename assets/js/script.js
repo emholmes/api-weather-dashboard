@@ -38,7 +38,7 @@ let cityButtonClicked = function(event) {
 
 // use Weather API to get lat/lon coordinates from city name
 let getCityCoordinates = function(city) {
-    let weatherAPI = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=8a3c0b5830459bf0bc6ee52ea4c39851";
+    let weatherAPI = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=8a3c0b5830459bf0bc6ee52ea4c39851";
     
     fetch(weatherAPI)
         .then(function(geoResponse) {
