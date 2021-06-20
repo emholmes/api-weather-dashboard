@@ -25,7 +25,7 @@ main {
     margin-right: 20px;
 }
 
-.navigation-section {
+nav {
     grid-column: 1 / span 6;
     grid-row: span 10;
 }
@@ -66,6 +66,8 @@ input {
 .search-history {
     margin: 0 20px 10px 10px;
     border-top: 1px solid var(--dark-blue);
+    overflow: scroll;
+    max-height: 460px;
 }
 
 .search-history li {
@@ -117,6 +119,7 @@ input {
 
 .forecast {
     grid-column: 7 / span 19;
+    display: none;
 }
 
 .forecast-cards {
@@ -142,12 +145,8 @@ ul {
     padding: 8px;
 }
 
-li p span {
-    font-weight: 200;
-}
-
 li p:not(:first-of-type) {
-    padding-bottom: 15px;
+    padding-bottom: 20px;
     font-size: 15px;
 }
 
@@ -164,7 +163,7 @@ li p:not(:first-of-type) {
 }
 
 @media screen and (max-width: 1024px) {
-    .navigation-section {
+    nav {
         grid-column: 1 / span 8;
     }
 
@@ -181,7 +180,7 @@ li p:not(:first-of-type) {
 }
 
 @media screen and (max-width: 768px) {
-    .navigation-section {
+    nav {
         grid-column: 1 / span 10;
     }
     

@@ -41,56 +41,53 @@ let getCityCoordinates = function(city) {
     fetch(geocodingApi).then(function(response) {
         if (response.ok) {
             response.json().then(function(data) {
-                // try to move this part to the current weather function
+                console.log(data)
                 let cityCoordinates = "lat=" + data[0].lat + "&lon=" + data[0].lon;
-                let cityName = document.getElementById("city-name");
-                let date = new Date();
-                console.log(data);
-                cityName.innerText = data[0].local_names.en + " (" + date.toLocaleDateString("en-US")+ ")";
+                let cityName = data[0].local_names.en
+                if (cityName === undefined) {
+                    cityName = data[0].name;
+                } else {
+                    cityName = data[0].local_names.en;
+                }
                 if (inSearchHistory(city) === false) {
                     cities.push(city);
                     createCityButton(city);
                 }
-                getWeatherInfo(cityCoordinates);
+                getWeatherInfo(cityCoordinates, cityName);
             });
         } else {
-            // turn in to a modal
             alert("We couldn't find that city, please try again.");
         }
     });
 }
 
-
-let getWeatherInfo = function(coordinates) {
+let getWeatherInfo = function(coordinates, cityName) {
     const weatherApi = "https://api.openweathermap.org/data/2.5/onecall?" + coordinates
      + "&units=imperial&appid=8a3c0b5830459bf0bc6ee52ea4c39851"
 
     fetch(weatherApi).then(function(response) {
         if (response.ok) {
             response.json().then(function(data) {
-                currentWeather(data);
+                buildCurrentWeather(data, cityName);
                 buildForecastCards(data);
-                
                 saveCities();
             });
         } else {
-            // turn in to a modal
             alert("We couldn't find that city, please try again.");
         }
     });
 }
 
-// have hero/current day weather info display from data[0] 
-
-let currentWeather = function(data) {
+let buildCurrentWeather = function(data, cityName) {
     document.querySelector(".current-weather").style.display = "block";
+    let date = new Date();
+    document.querySelector("#city-name").innerHTML = cityName + " (" + date.toLocaleDateString("en-US")+ ")";
     document.querySelector("#weather-icon").src = "http://openweathermap.org/img/wn/" + data.current.weather[0].icon + ".png";
     document.getElementById("city-temp").innerHTML = "Temp: " + data.current.temp + " &#176;F";
     document.getElementById("city-wind").innerHTML = "Wind: " + data.current.wind_speed + " MPH";
     document.getElementById("city-humidity").innerHTML = "Humidity: " + data.current.humidity + "%";
-    let uvi = data.current.uvi;
-    document.getElementById("city-uvi").innerHTML = "UV Index: <span id='uvi'>" + uvi + "</span>";
-    addUviBackground(uvi);
+    document.getElementById("city-uvi").innerHTML = "UV Index: <span id='uvi'>" + data.current.uvi + "</span>";
+    addUviBackground(data.current.uvi);
 }
 
 let addUviBackground = function(uvi) {
@@ -100,9 +97,6 @@ let addUviBackground = function(uvi) {
     } 
     else if (uvi < 8) {
         uviSpan.classList.add("moderate");
-    }
-    else if (uvi < 11) {
-        uviSpan.classList.add("severe");
     }
     else {
         uviSpan.classList.add("severe");
@@ -114,25 +108,18 @@ let emptyUlElement = function() {
 }
 
 let buildForecastCards = function(data) {
-    let liElements = document.querySelector(".forecast-cards").children;
-    let liArray = [];
-    for (let li of liElements) {
-        liArray.push(li);
-    }   
     emptyUlElement();
-    let innerH3 = document.querySelector("h3");
-    innerH3.innerHTML = "5-Day Forecast:";
+    document.querySelector(".forecast").style.display = "block";
     for (let i = 1; i < 6; i++) {
         let date = new Date(data.daily[i].dt * 1000);
         date = date.toLocaleDateString();
         let listEl = document.createElement("li");
         document.querySelector(".forecast-cards").appendChild(listEl);
         let forecastIcon = "<img src='http://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + ".png' alt='icon for " + data.daily[i].weather[0].description + "'>";
-        let forecastTemp = "<p><span>Temp:</span> " + data.daily[i].temp.day + " &#176;F</p>";
-        let forecastWind = "<p><span>Wind:</span> " + data.daily[i].wind_speed + " MPH</p>";
-        let forecastHumidity = "<p><span>Humidity:</span> " + data.daily[i].humidity + "%</p>";
+        let forecastTemp = "<p>Temp: " + data.daily[i].temp.day + " &#176;F</p>";
+        let forecastWind = "<p>Wind: " + data.daily[i].wind_speed + " MPH</p>";
+        let forecastHumidity = "<p>Humidity: " + data.daily[i].humidity + "%</p>";
         listEl.innerHTML = "<p>" + date + "</p>" +  forecastIcon + forecastTemp + forecastWind + forecastHumidity;
-
     }
 }
 

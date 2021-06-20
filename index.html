@@ -12,19 +12,17 @@
         <h1>Weather Dashboard</h1>
     </header>
     <main>
-        <section class="navigation-section">
-            <nav>
-                <!-- search for city here -->
-                <form class="search-form">
-                    <label for="search">
-                        <h2>Search for a City:</h2>
-                    </label>
-                    <input type="search" id="search" name="search" placeholder="San Diego" required>
-                    <button id="submit-search" type="submit">Search</button>
-                </form>
-                <ul class="search-history" id="search-history"></ul>
-            </nav>
-        </section>
+        <nav>
+            <!-- search for city here -->
+            <form class="search-form">
+                <label for="search">
+                    <h2>Search for a City:</h2>
+                </label>
+                <input type="search" id="search" name="search" placeholder="San Diego" required>
+                <button id="submit-search" type="submit">Search</button>
+            </form>
+            <ul class="search-history" id="search-history"></ul>
+        </nav>
         <section class="current-weather">
             <div>
                 <h2 id="city-name"></h2>
@@ -36,7 +34,7 @@
             <p id="city-uvi"></p>
         </section>
         <section class="forecast" id="forecast">
-            <h3></h3>
+            <h3>5-Day Forecast</h3>
             <ul class="forecast-cards">
             </ul>
         </section>
