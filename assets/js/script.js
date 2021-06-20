@@ -7,10 +7,10 @@ let captureSearchValue = function(event) {
     let city = document.getElementById("search").value.trim();
     document.getElementById("search").value = "";
    
-    lookUpCity(city);
+    getCityCoordinates(city);
 }
 
-let doesCityAlreadyExist = function(cityName) {
+let inSearchHistory = function(cityName) {
     let found = false;
     for (let i = 0; i < cities.length; i++) {
         if (cities[i] === cityName) {
@@ -32,44 +32,52 @@ let createCityButton = function(cityName) {
 
 // city button click event 
 document.getElementById("search-history").onclick = function(event) {
-    lookUpCity(event.target.innerHTML);
+    getCityCoordinates(event.target.innerHTML);
 }
 
-
-let lookUpCity = function(city) {
+let getCityCoordinates = function(city) {
+    const geocodingApi = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=8a3c0b5830459bf0bc6ee52ea4c39851";
     
-    const weatherApi = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=8a3c0b5830459bf0bc6ee52ea4c39851";
-
-    fetch(weatherApi).then(function(weatherResponse) {
-        if (weatherResponse.ok) {
-            weatherResponse.json().then(function(data) {
+    fetch(geocodingApi).then(function(response) {
+        if (response.ok) {
+            response.json().then(function(data) {
+                // try to move this part to the current weather function
+                let cityCoordinates = "lat=" + data[0].lat + "&lon=" + data[0].lon;
                 let cityName = document.getElementById("city-name");
-                let latitude = data.coord.lat;
-                let longitude = data.coord.lon;
                 let date = new Date();
-                cityName.innerText = data.name + " (" + date.toLocaleDateString("en-US")+ ")";
-                return fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + latitude + "&lon=" + longitude + "&units=imperial&appid=8a3c0b5830459bf0bc6ee52ea4c39851")
-            })
-            .then(function(response) {
-                if (response.ok) {
-                    response.json().then(function(data) {
-                        console.log(data);
-                        currentWeather(data);
-                        buildForecastCards(data);
-                        if (doesCityAlreadyExist(city) === false) {
-                            cities.push(city);
-                            createCityButton(city);
-                        }
-                        saveCities();
-                    })
+                cityName.innerText = data[0].name + " (" + date.toLocaleDateString("en-US")+ ")";
+                if (inSearchHistory(city) === false) {
+                    cities.push(city);
+                    createCityButton(city);
                 }
-            })
+                getWeatherInfo(cityCoordinates);
+            });
         } else {
             // turn in to a modal
             alert("We couldn't find that city, please try again.");
         }
-        
-    })
+    });
+}
+
+
+let getWeatherInfo = function(coordinates) {
+    const weatherApi = "https://api.openweathermap.org/data/2.5/onecall?" + coordinates
+     + "&units=imperial&appid=8a3c0b5830459bf0bc6ee52ea4c39851"
+
+    fetch(weatherApi).then(function(response) {
+        if (response.ok) {
+            response.json().then(function(data) {
+                console.log(data);
+                currentWeather(data);
+                buildForecastCards(data);
+                
+                saveCities();
+            });
+        } else {
+            // turn in to a modal
+            alert("We couldn't find that city, please try again.");
+        }
+    });
 }
 
 // have hero/current day weather info display from data[0] 
