@@ -38,47 +38,49 @@ let cityButtonClicked = function(event) {
 
 // use Geocoding API to get lat/lon coordinates from city name
 let getCityCoordinates = function(city) {
-    const geocodingApi = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=8a3c0b5830459bf0bc6ee52ea4c39851";
+    let geocodingApi = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=8a3c0b5830459bf0bc6ee52ea4c39851";
     
-    fetch(geocodingApi).then(function(response) {
-        if (response.ok) {
-            response.json().then(function(data) {
-                console.log(data)
-                let cityCoordinates = "lat=" + data[0].lat + "&lon=" + data[0].lon;
-                let cityName = data[0].local_names.en
-                if (cityName === undefined) {
-                    cityName = data[0].name;
-                } else {
-                    cityName = data[0].local_names.en;
-                }
-                if (inSearchHistory(city) === false) {
-                    cities.push(city);
-                    createCityButton(city);
-                }
-                getWeatherInfo(cityCoordinates, cityName);
-            });
-        } else {
-            alert("We couldn't find that city, please try again.");
-        }
-    });
+    fetch(geocodingApi)
+        .then(function(geoResponse) {
+            console.log(geoResponse.ok);
+            if (geoResponse.ok) {
+                geoResponse.json().then(function(data) {
+                    let cityCoordinates = "lat=" + data.coord.lat + "&lon=" + data.coord.lon;
+                    let cityName = data.name;
+                    if (inSearchHistory(city) === false) {
+                        cities.push(city);
+                        createCityButton(city);
+                    }
+                    getWeatherInfo(cityCoordinates, cityName);
+                });
+            } else {
+                alert("We couldn't find that city, please try again.");
+            }
+        })
+        .catch(function(error) {
+            alert("Unable to connect to Geocoding API. Please try again.");
+        });
 }
 
-// use coordinates to get weather information
 let getWeatherInfo = function(coordinates, cityName) {
-    const weatherApi = "https://api.openweathermap.org/data/2.5/onecall?" + coordinates
+    let weatherApi = "https://api.openweathermap.org/data/2.5/onecall?" + coordinates
      + "&units=imperial&appid=8a3c0b5830459bf0bc6ee52ea4c39851"
 
-    fetch(weatherApi).then(function(response) {
-        if (response.ok) {
-            response.json().then(function(data) {
-                buildCurrentWeather(data, cityName);
-                buildForecastCards(data);
-                saveCities();
-            });
-        } else {
-            alert("We couldn't find that city, please try again.");
-        }
-    });
+    fetch(weatherApi)
+        .then(function(response) {
+            if (response.ok) {
+                response.json().then(function(data) {
+                    buildCurrentWeather(data, cityName);
+                    buildForecastCards(data);
+                    saveCities();
+                });
+            } else {
+                alert("We couldn't find that city, please try again.");
+            }
+        })
+        .catch(function(error) {
+            alert("Unable to connect to Weather API. Please try again.");
+        });
 }
 
 let buildCurrentWeather = function(data, cityName) {
@@ -118,7 +120,7 @@ let buildForecastCards = function(data) {
         date = date.toLocaleDateString();
         let listEl = document.createElement("li");
         document.querySelector(".forecast-cards").appendChild(listEl);
-        let forecastIcon = "<img src='http://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + ".png' alt='icon for " + data.daily[i].weather[0].description + "'>";
+        let forecastIcon = "<img src='http://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + ".png' alt='icon for " + data.daily[i].weather[0].description + "' title='" + data.daily[i].weather[0].description + "'>";
         let forecastTemp = "<p>Temp: " + data.daily[i].temp.day + " &#176;F</p>";
         let forecastWind = "<p>Wind: " + data.daily[i].wind_speed + " MPH</p>";
         let forecastHumidity = "<p>Humidity: " + data.daily[i].humidity + "%</p>";
