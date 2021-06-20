@@ -219,10 +219,6 @@ li p:not(:first-of-type) {
     .forecast-cards {
         grid-template-columns: repeat(auto-fill, 160px);
     }
-
-    li {
-        margin: 10px 15px 0 0;
-    }
 }
 
 /* extra small screen styles */
