@@ -10,6 +10,7 @@ let captureSearchValue = function(event) {
     getCityCoordinates(city);
 }
 
+// check if city is already in search history
 let inSearchHistory = function(cityName) {
     let found = false;
     for (let i = 0; i < cities.length; i++) {
@@ -35,6 +36,7 @@ let cityButtonClicked = function(event) {
     getCityCoordinates(event.target.innerHTML);
 }
 
+// use Geocoding API to get lat/lon coordinates from city name
 let getCityCoordinates = function(city) {
     const geocodingApi = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=8a3c0b5830459bf0bc6ee52ea4c39851";
     
@@ -61,6 +63,7 @@ let getCityCoordinates = function(city) {
     });
 }
 
+// use coordinates to get weather information
 let getWeatherInfo = function(coordinates, cityName) {
     const weatherApi = "https://api.openweathermap.org/data/2.5/onecall?" + coordinates
      + "&units=imperial&appid=8a3c0b5830459bf0bc6ee52ea4c39851"

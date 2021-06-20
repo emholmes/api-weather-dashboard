@@ -25,6 +25,7 @@ main {
     margin-right: 20px;
 }
 
+/* search input and history styles */
 nav {
     grid-column: 1 / span 6;
     grid-row: span 4;
@@ -89,7 +90,9 @@ input {
 .city-button:hover {
     background-color: #bcc9d4;
 }
+/* search input and history styles end */
 
+/* current weather styles */
 .current-weather {
     display: none;
     grid-column:  7 / span 19;
@@ -117,6 +120,21 @@ input {
     font-weight: 500;
 }
 
+.favorable {
+    background-color: #4fa20f;
+}
+
+.moderate {
+    background-color: #fdbc04;
+}
+
+.severe {
+    background-color: #f55024;
+}
+/* current weather styles end */
+
+
+/* 5-day forecast styles */
 .forecast {
     grid-column: 7 / span 19;
     display: none;
@@ -149,19 +167,9 @@ li p:not(:first-of-type) {
     padding-bottom: 20px;
     font-size: 15px;
 }
+/* 5-day forecast styles end */
 
-.favorable {
-    background-color: #4fa20f;
-}
-
-.moderate {
-    background-color: #fdbc04;
-}
-
-.severe {
-    background-color: #f55024;
-}
-
+/* horizontal tablet/lg screen styles */
 @media screen and (max-width: 1024px) {
     nav {
         grid-column: 1 / span 8;
@@ -179,6 +187,7 @@ li p:not(:first-of-type) {
     
 }
 
+/* vertical tablet/med screen styles */
 @media screen and (max-width: 768px) {
     nav {
         grid-column: 1 / span 10;
@@ -190,7 +199,7 @@ li p:not(:first-of-type) {
     }
 } 
 
-
+/* small screen styles */
 @media screen and (max-width: 574px) {
     main {
         display: block;
@@ -216,6 +225,7 @@ li p:not(:first-of-type) {
     }
 }
 
+/* extra small screen styles */
 @media screen and (max-width: 365px) {
     .forecast-cards {
         grid-template-columns: repeat(auto-fill, 200px);
