@@ -36,13 +36,12 @@ let cityButtonClicked = function(event) {
     getCityCoordinates(event.target.innerHTML);
 }
 
-// use Geocoding API to get lat/lon coordinates from city name
+// use Weather API to get lat/lon coordinates from city name
 let getCityCoordinates = function(city) {
-    let geocodingApi = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=8a3c0b5830459bf0bc6ee52ea4c39851";
+    let weatherAPI = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=8a3c0b5830459bf0bc6ee52ea4c39851";
     
-    fetch(geocodingApi)
+    fetch(weatherAPI)
         .then(function(geoResponse) {
-            console.log(geoResponse.ok);
             if (geoResponse.ok) {
                 geoResponse.json().then(function(data) {
                     let cityCoordinates = "lat=" + data.coord.lat + "&lon=" + data.coord.lon;
@@ -63,10 +62,10 @@ let getCityCoordinates = function(city) {
 }
 
 let getWeatherInfo = function(coordinates, cityName) {
-    let weatherApi = "https://api.openweathermap.org/data/2.5/onecall?" + coordinates
+    let oneCallApi = "https://api.openweathermap.org/data/2.5/onecall?" + coordinates
      + "&units=imperial&appid=8a3c0b5830459bf0bc6ee52ea4c39851"
 
-    fetch(weatherApi)
+    fetch(oneCallApi)
         .then(function(response) {
             if (response.ok) {
                 response.json().then(function(data) {
