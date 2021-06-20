@@ -54,6 +54,7 @@ let lookUpCity = function(city) {
             .then(function(response) {
                 if (response.ok) {
                     response.json().then(function(data) {
+                        console.log(data);
                         currentWeather(data);
                         buildForecastCards(data);
                         if (doesCityAlreadyExist(city) === false) {
@@ -123,7 +124,7 @@ let buildForecastCards = function(data) {
         date = date.toLocaleDateString();
         let listEl = document.createElement("li");
         document.querySelector(".forecast-cards").appendChild(listEl);
-        let forecastIcon = "<img src='http://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + ".png'>";
+        let forecastIcon = "<img src='http://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + ".png' alt='icon for " + data.daily[i].weather[0].description + "'>";
         let forecastTemp = "<p><span>Temp:</span> " + data.daily[i].temp.day + " &#176;F</p>";
         let forecastWind = "<p><span>Wind:</span> " + data.daily[i].wind_speed + " MPH</p>";
         let forecastHumidity = "<p><span>Humidity:</span> " + data.daily[i].humidity + "%</p>";

@@ -8,7 +8,7 @@
 :root {
     --grey: #D3E0EA;
     --blue: #226597;
-    --dark-blue: #113F67;
+    --dark-blue: #33475a;
 }
 
 h1 {
@@ -56,6 +56,11 @@ input {
     border-radius: 5px;
     border: none;
     font-size: 16px;
+    cursor: pointer;
+}
+
+#submit-search:hover {
+    background-color: var(--dark-blue);
 }
 
 .search-history {
@@ -73,6 +78,11 @@ input {
     border: none;
     font-size: 16px;
     margin-top: 15px;
+    cursor: pointer;
+}
+
+.city-button:hover {
+    background-color: #bcc9d4;
 }
 
 .current-weather {
