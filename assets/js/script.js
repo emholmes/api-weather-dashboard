@@ -43,7 +43,6 @@ let lookUpCity = function(city) {
     fetch(weatherApi).then(function(weatherResponse) {
         if (weatherResponse.ok) {
             weatherResponse.json().then(function(data) {
-                console.log(data);
                 let cityName = document.getElementById("city-name");
                 let latitude = data.coord.lat;
                 let longitude = data.coord.lon;
@@ -89,19 +88,16 @@ let currentWeather = function(data) {
 let addUviBackground = function(uvi) {
     let uviSpan = document.getElementById("uvi");
     if (uvi < 3) {
-        uviSpan.classList.add("low");
+        uviSpan.classList.add("favorable");
     } 
-    else if (uvi < 6) {
+    else if (uvi < 8) {
         uviSpan.classList.add("moderate");
     }
-    else if (uvi < 8) {
-        uviSpan.classList.add("high");
-    }
     else if (uvi < 11) {
-        uviSpan.classList.add("very-high");
+        uviSpan.classList.add("severe");
     }
     else {
-        uviSpan.classList.add("extreme");
+        uviSpan.classList.add("severe");
     }
 }
 

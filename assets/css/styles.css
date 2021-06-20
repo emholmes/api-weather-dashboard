@@ -148,7 +148,7 @@ li p:not(:first-of-type) {
     font-size: 15px;
 }
 
-.low {
+.favorable {
     background-color: #4fa20f;
 }
 
@@ -156,18 +156,9 @@ li p:not(:first-of-type) {
     background-color: #fdbc04;
 }
 
-.high {
-    background-color: #fd9100;
-}
-
-.very-high {
+.severe {
     background-color: #f55024;
 }
-
-.extreme {
-    background-color: #9e47cc;
-}
-
 
 @media screen and (max-width: 1024px) {
     .navigation-section {
