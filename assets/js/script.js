@@ -74,7 +74,6 @@ let getWeatherInfo = function(coordinates, cityName) {
                     buildCurrentWeather(data, cityName);
                     buildForecastCards(data);
                     saveCities();
-                    console.log(data);
                 });
             } else {
                 alert("We couldn't find that city, please try again.");
