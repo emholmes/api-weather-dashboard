@@ -74,6 +74,7 @@ let getWeatherInfo = function(coordinates, cityName) {
                     buildCurrentWeather(data, cityName);
                     buildForecastCards(data);
                     saveCities();
+                    console.log(data);
                 });
             } else {
                 alert("We couldn't find that city, please try again.");
@@ -88,7 +89,10 @@ let buildCurrentWeather = function(data, cityName) {
     document.querySelector(".current-weather").style.display = "block";
     let date = new Date();
     document.querySelector("#city-name").innerHTML = cityName + " (" + date.toLocaleDateString("en-US")+ ")";
-    document.querySelector("#weather-icon").src = "https://openweathermap.org/img/wn/" + data.current.weather[0].icon + ".png";
+    let weatherIcon = document.querySelector("#weather-icon");
+    weatherIcon.src = "https://openweathermap.org/img/wn/" + data.current.weather[0].icon + ".png";
+    weatherIcon.setAttribute("alt", data.current.weather[0].description + " weather icon");
+    weatherIcon.setAttribute("title", data.current.weather[0].description);
     document.getElementById("city-temp").innerHTML = "Temp: " + data.current.temp + " &#176;F";
     document.getElementById("city-wind").innerHTML = "Wind: " + data.current.wind_speed + " MPH";
     document.getElementById("city-humidity").innerHTML = "Humidity: " + data.current.humidity + "%";
@@ -121,7 +125,7 @@ let buildForecastCards = function(data) {
         date = date.toLocaleDateString();
         let listEl = document.createElement("li");
         document.querySelector(".forecast-cards").appendChild(listEl);
-        let forecastIcon = "<img src='https://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + ".png' alt='icon for " + data.daily[i].weather[0].description + "' title='" + data.daily[i].weather[0].description + "'>";
+        let forecastIcon = "<img src='https://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + ".png' alt='" + data.daily[i].weather[0].description +  " weather icon' title='" + data.daily[i].weather[0].description + "'>";
         let forecastTemp = "<p>Temp: " + data.daily[i].temp.day + " &#176;F</p>";
         let forecastWind = "<p>Wind: " + data.daily[i].wind_speed + " MPH</p>";
         let forecastHumidity = "<p>Humidity: " + data.daily[i].humidity + "%</p>";
