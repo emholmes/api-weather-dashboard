@@ -21,6 +21,7 @@ let inSearchHistory = function(cityName) {
     return found;
 }
 
+// search history buttons
 let createCityButton = function(cityName) {
     let buttonLi = document.createElement("li");
     let cityButton = document.createElement("button");
@@ -32,6 +33,7 @@ let createCityButton = function(cityName) {
     document.querySelector("ul").prepend(buttonLi);
 }
 
+// search history button event handler
 let cityButtonClicked = function(event) {
     getCityCoordinates(event.target.innerHTML);
 }
