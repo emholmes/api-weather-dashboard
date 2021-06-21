@@ -119,7 +119,7 @@ let buildForecastCards = function(data) {
         date = date.toLocaleDateString();
         let listEl = document.createElement("li");
         document.querySelector(".forecast-cards").appendChild(listEl);
-        let forecastIcon = "<img src='https://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + ".png' rel='icon' alt='icon for " + data.daily[i].weather[0].description + "' title='" + data.daily[i].weather[0].description + "'>";
+        let forecastIcon = "<img src='https://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + ".png' alt='icon for " + data.daily[i].weather[0].description + "' title='" + data.daily[i].weather[0].description + "'>";
         let forecastTemp = "<p>Temp: " + data.daily[i].temp.day + " &#176;F</p>";
         let forecastWind = "<p>Wind: " + data.daily[i].wind_speed + " MPH</p>";
         let forecastHumidity = "<p>Humidity: " + data.daily[i].humidity + "%</p>";
